@@ -1,12 +1,13 @@
 const Users = require('../Models/User.js');
 const express = require('express');
-const app = express();
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
+require('dotenv').config();  // Load environment variables
 
 // Middleware to parse JSON bodies
+const app = express();
 app.use(express.json());
 
 // Display data
@@ -70,9 +71,27 @@ router.post('/register', upload.single("profileImage"), async (req, res) => {
     }
 });
 
-// User Login (Placeholder, not implemented in your original code)
-// router.post('/login', async (req, res) => {
-//     // Implementation for login
-// });
+// User Login
+router.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await Users.findOne({ email });
+        if (!user) {
+            return res.status(409).json({ message: "User does not exist" });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: "Invalid credentials!" });
+        }
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.status(200).json({ token, user });
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Login failed!", error: error.message });
+    }
+});
 
 module.exports = router;
