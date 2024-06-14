@@ -49,7 +49,7 @@ router.post("/register", upload.single("profileImage"), async (req, res) => {
       lastName,
       email,
       password: hashedPassword,
-      profileImagePath,
+      profileImage,
     });
 
     /* Save the new User */
@@ -96,5 +96,6 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: err.message })
   }
 })
+// USER LOGIN
 
 module.exports = router
