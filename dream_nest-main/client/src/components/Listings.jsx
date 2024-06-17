@@ -8,7 +8,7 @@ import { setListings } from "../redux/state";
 
 const Listings = () => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState("All");
 
