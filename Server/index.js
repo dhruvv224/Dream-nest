@@ -21,3 +21,4 @@ app.listen(PORT,()=>{
     }
 })
 app.use('/api/auth',require('./Routes/User.js'))
+app.use('/api/listings',require('./Routes/ListingRoute.js'))
