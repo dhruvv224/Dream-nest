@@ -51,7 +51,7 @@ router.post('/category',upload.array("listingPhotos"),async(req,res)=>{
             return res.status(400).send("No file uploaded.")
          }
          const listingPhotoPaths=listingPhotos.map((file)=>file.path)
-         const newListing = new Listing({
+         const newListing = new Listings({
             creator,
             category,
             type,
