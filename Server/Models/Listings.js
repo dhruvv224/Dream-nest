@@ -1,7 +1,7 @@
 const mongoose =require('mongoose');
 const ListingSchema=mongoose.Schema({
     creator:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         ref:'User'
     },
     category:{

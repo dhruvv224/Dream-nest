@@ -46,11 +46,11 @@ router.post('/category',upload.array("listingPhotos"),async(req,res)=>{
             highlightDesc,
             price,
           } = req.body;
-         const listingPhotos=req.files
-         if (!listingPhotos) {
-            return res.status(400).send("No file uploaded.")
-         }
-         const listingPhotoPaths=listingPhotos.map((file)=>file.path)
+        //  const listingPhotos=req.files
+        //  if (!listingPhotos) {
+        //     return res.status(400).send("No file uploaded.")
+        //  }
+        //  const listingPhotoPaths=listingPhotos.map((file)=>file.path)
          const newListing = new Listings({
             creator,
             category,
@@ -65,7 +65,7 @@ router.post('/category',upload.array("listingPhotos"),async(req,res)=>{
             bedCount,
             bathroomCount,
             amenities,
-            listingPhotoPaths,
+        
             title,
             description,
             highlight,
