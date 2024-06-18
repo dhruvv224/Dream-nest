@@ -46,7 +46,7 @@ const Navbar = () => {
             Become A Host
           </a>
         ) : (
-          <a href="/login" className="host">
+          <a href="/Login" className="host">
             Become A Host
           </a>
         )}
