@@ -24,7 +24,7 @@ router.get('/',async (req,res)=>{
         
     }
 })
-router.post('/category',upload.array("listingPhotos"),async(req,res)=>{
+router.post('/createlistings',upload.array("listingPhotos"),async(req,res)=>{
     try {
         const {
             creator,
