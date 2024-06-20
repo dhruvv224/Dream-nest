@@ -30,17 +30,20 @@ router.get('/:category', async (req, res) => {
         console.log(`Category: ${categoryQ}`);
         let listings;
 
-        if (categoryQ) {
+       
             listings = await Listings.find({ category: categoryQ });
-            if (listings.length === 0) {
-                console.log('No listings found for the provided category.');
-            } else {
-                console.log('Listings:', listings);
-            }
-            res.status(200).json({ message: 'all good', listings: listings });
-        } else {
+            if(listings.length>0)
+                {
+                    console.log(listings)
+
+                    res.status(200).json({ message: 'all good', listings: listings });
+                }
+            
+            else {
+            
             console.log("Error: No category provided");
-            res.status(400).json({ message: "No category provided" });
+
+            res.status(400).json({ message: "Not founded" });
         }
     } catch (error) {
         res.status(400).json({ message: "There is something wrong" });
