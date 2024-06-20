@@ -43,7 +43,7 @@ router.get('/:category', async (req, res) => {
             
             console.log("Error: No category provided");
 
-            res.status(400).json({ message: "Not founded" });
+            res.status(200).json({ message: "Not founded",listings:listings });
         }
     } catch (error) {
         res.status(400).json({ message: "There is something wrong" });
