@@ -24,20 +24,31 @@ router.get('/',async (req,res)=>{
         
     }
 })
-router.get('/:category',async(req,res)=>{
+router.get('/:category', async (req, res) => {
     try {
-        const categoryQ=req.params.category;
-        console.log(categoryQ)
-        res.status(200).json({message:'all good'})
+        const categoryQ = req.params.category;
+        console.log(`Category: ${categoryQ}`);
+        let listings;
 
-        
+        if (categoryQ) {
+            listings = await Listings.find({ category: categoryQ });
+            if (listings.length === 0) {
+                console.log('No listings found for the provided category.');
+            } else {
+                console.log('Listings:', listings);
+            }
+            res.status(200).json({ message: 'all good', listings: listings });
+        } else {
+            console.log("Error: No category provided");
+            res.status(400).json({ message: "No category provided" });
+        }
     } catch (error) {
-        res.status(400).json({message:"There us something wrong"})
-        console.log("error")
-        
+        res.status(400).json({ message: "There is something wrong" });
+        console.log("Error:", error);
     }
+});
 
-})
+
 router.post('/createlistings',upload.array("listingPhotos"),async(req,res)=>{
     try {
         const {
