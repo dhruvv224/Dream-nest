@@ -24,6 +24,20 @@ router.get('/',async (req,res)=>{
         
     }
 })
+router.get('/:category',async(req,res)=>{
+    try {
+        const categoryQ=req.params.category;
+        console.log(categoryQ)
+        res.status(200).json({message:'all good'})
+
+        
+    } catch (error) {
+        res.status(400).json({message:"There us something wrong"})
+        console.log("error")
+        
+    }
+
+})
 router.post('/createlistings',upload.array("listingPhotos"),async(req,res)=>{
     try {
         const {
