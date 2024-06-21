@@ -17,8 +17,8 @@ const storage=multer.diskStorage({
 const upload=multer({storage})
 router.get('/',async (req,res)=>{
     try {
-        const ListingCategory=await Listings.find();
-        res.status(200).json({ListingCategory})
+        const listings=await Listings.find();
+        res.status(200).json({message:"all good",listings:listings})
         
     } catch (error) {
         
@@ -36,7 +36,7 @@ router.get('/:category', async (req, res) => {
                 {
                     console.log(listings)
 
-                    res.status(200).json({ message: 'all good', listings: listings });
+                    res.status(200).json({ message: 'all good',listings:listings });
                 }
             
             else {
