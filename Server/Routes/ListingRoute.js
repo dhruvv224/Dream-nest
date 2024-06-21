@@ -1,58 +1,53 @@
-const mongoose=require('mongoose');
-const Listings=require('../Models/Listings.js');
-const express=require('express');
-const app=express();
-const multer=require('multer')
-const router=express.Router();
+const mongoose = require('mongoose');
+const Listings = require('../Models/Listings.js');
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const router = express.Router();
+const app = express();
 app.use(express.json());
-// storage 
-const storage=multer.diskStorage({
-    destination:function(req,file,cb){
-        cb(null,'/public/uploads')
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
+// storage
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, 'public', 'uploads'));
     },
-    filename:function(req,file,cb){
-        cb(null,file.originalname)
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
     }
-})
-const upload=multer({storage})
-router.get('/',async (req,res)=>{
+});
+const upload = multer({ storage });
+
+router.get('/', async (req, res) => {
     try {
-        const listings=await Listings.find();
-        res.status(200).json({message:"all good",listings:listings})
-        
+        const listings = await Listings.find();
+        res.status(200).json({ message: "all good", listings: listings });
     } catch (error) {
-        
+        console.error("Error fetching listings:", error);
+        res.status(500).json({ message: "There was an error fetching the listings" });
     }
-})
+});
+
 router.get('/:category', async (req, res) => {
     try {
         const categoryQ = req.params.category;
         console.log(`Category: ${categoryQ}`);
-        let listings;
-
-       
-            listings = await Listings.find({ category: categoryQ });
-            if(listings.length>0)
-                {
-                    console.log(listings)
-
-                    res.status(200).json({ message: 'all good',listings:listings });
-                }
-            
-            else {
-            
-            console.log("Error: No category provided");
-
-            res.status(200).json({ message: "Not founded",listings:listings });
+        const listings = await Listings.find({ category: categoryQ });
+        if (listings.length > 0) {
+            console.log(listings);
+            res.status(200).json({ message: 'all good', listings: listings });
+        } else {
+            console.log("No listings found for the provided category");
+            res.status(404).json({ message: "Not found", listings: [] });
         }
     } catch (error) {
-        res.status(400).json({ message: "There is something wrong" });
-        console.log("Error:", error);
+        console.error("Error fetching listings by category:", error);
+        res.status(500).json({ message: "There is something wrong" });
     }
 });
 
-
-router.post('/createlistings',upload.array("listingPhotos"),async(req,res)=>{
+router.post('/createlistings', upload.array("listingPhotos"), async (req, res) => {
     try {
         const {
             creator,
@@ -73,13 +68,15 @@ router.post('/createlistings',upload.array("listingPhotos"),async(req,res)=>{
             highlight,
             highlightDesc,
             price,
-          } = req.body;
-        //  const listingPhotos=req.files
-        //  if (!listingPhotos) {
-        //     return res.status(400).send("No file uploaded.")
-        //  }
-        //  const listingPhotoPaths=listingPhotos.map((file)=>file.path)
-         const newListing = new Listings({
+        } = req.body;
+
+        const listingPhotos = req.files;
+        if (!listingPhotos) {
+            return res.status(400).send("No file uploaded.");
+        }
+
+        const listingPhotoPaths = listingPhotos.map((file) => file.path);
+        const newListing = new Listings({
             creator,
             category,
             type,
@@ -93,21 +90,23 @@ router.post('/createlistings',upload.array("listingPhotos"),async(req,res)=>{
             bedCount,
             bathroomCount,
             amenities,
-        
+            listingPhotoPaths,
             title,
             description,
             highlight,
             highlightDesc,
             price,
-          })
-      
-          await newListing.save()
-          res.status(200).json(newListing)
-        
+        });
+
+        await newListing.save();
+        res.status(201).json(newListing);
+
     } catch (error) {
-        
-        console.log("There is something wrong ",error)
-        res.status(400).json({message:'There is an error'})
+        console.error("There is something wrong:", error);
+        res.status(500).json({ message: 'There is an error' });
     }
-})
-module.exports=router;
+});
+
+app.use('/api/listings', router);
+
+module.exports = router;
