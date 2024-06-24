@@ -39,7 +39,7 @@ router.get('/:category', async (req, res) => {
             res.status(200).json({ message: 'all good', listings: listings });
         } else {
             console.log("No listings found for the provided category");
-            res.status(404).json({ message: "Not found", listings: [] });
+            res.status(200).json({ message: "Not found", listings: [] });
         }
     } catch (error) {
         console.error("Error fetching listings by category:", error);
