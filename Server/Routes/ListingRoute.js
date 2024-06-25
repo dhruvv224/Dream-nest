@@ -46,7 +46,21 @@ router.get('/:category', async (req, res) => {
         res.status(500).json({ message: "There is something wrong" });
     }
 });
-
+//  passing response by id 
+router.get("/id/:id",async(req,res)=>{
+try {
+    const id=req.params.id;
+    console.log(id)
+    const listings=await Listings.findById(id)
+    res.status(200).json({message:'found',listings:listings})
+    console.log(listings)
+    
+} catch (error) {
+    console.log(error.message)
+    res.status(400).json({message:"there is an error data not found"})
+    
+}
+})
 router.post('/createlistings', upload.array("listingPhotos"), async (req, res) => {
     try {
         const {
