@@ -72,6 +72,12 @@ const ListingSchema=mongoose.Schema({
     price: {
       type: Number,
       required: true,
+    },
+    liked:{
+      type:Boolean
+    },
+    currentIndex:{
+      type:Number
     }
 })
 const Listings=mongoose.model('Listings',ListingSchema);
