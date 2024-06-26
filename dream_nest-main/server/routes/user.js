@@ -16,6 +16,7 @@ router.get("/:userId/trips", async (req, res) => {
   }
 })
 
+
 /* ADD LISTING TO WISHLIST */
 router.patch("/:userId/:listingId", async (req, res) => {
   try {

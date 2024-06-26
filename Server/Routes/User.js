@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
+const Listing=require('../Models/Listings.js')
 require('dotenv').config();  // Load environment variables
 
 // Middleware to parse JSON bodies
@@ -31,7 +32,31 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage });
+// Adding listings inside wishlist
+router.patch("/:userId/wishlist", async (req, res) => {
+    const { userId } = req.params;
+    const { wishlistItems } = req.body; // Fixed capitalization
 
+    try {
+        const user = await Users.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        wishlistItems.forEach(item => {
+            if (!user.wishList.includes(item)) {
+                user.wishList.push(item);
+            }
+        });
+
+        await user.save();
+        res.status(200).json(user);
+        console.log('Updated user:', user);
+    } catch (error) {
+        console.error('Error updating wishlist:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
 // User Register
 router.post('/register', upload.single("profileImage"), async (req, res) => {
     try {
