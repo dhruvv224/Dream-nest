@@ -137,7 +137,7 @@ const ListingDetails = () => {
 
         <h3>Description</h3>
         <p>{listing.description}</p>
-        <hr />
+        <hr />-
 
         <h3>{listing.highlight}</h3>
         <p>{listing.highlightDesc}</p>
