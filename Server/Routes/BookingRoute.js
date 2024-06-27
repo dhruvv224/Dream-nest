@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const Booking = require("../Models/Booking");
-const { default: ListingDetails } = require("../../dream_nest-main/client/src/pages/ListingDetails");
 
 router.post("/create", async (req, res) => {
     try {
