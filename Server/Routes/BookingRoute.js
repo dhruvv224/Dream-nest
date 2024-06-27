@@ -27,12 +27,12 @@ router.post("/create", async (req, res) => {
 });
 router.get('/get',async(req,res)=>{
     try {
-        const Bookings=await ListingDetails.find();
+        const Bookings=await Booking.find()
         res.status(200).json({booking:Bookings})
         
     } catch (error) {
         console.log("not found ",error.message)
-        res.status(400).json({message:"error something wrong"})
+        res.status(400).json({message:"error something  as, dasm dwrong"})
         
     }
 })

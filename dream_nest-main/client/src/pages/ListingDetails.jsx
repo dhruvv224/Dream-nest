@@ -91,6 +91,7 @@ const ListingDetails = () => {
     }
   }
 
+
   return loading ? (
     <Loader />
   ) : (
