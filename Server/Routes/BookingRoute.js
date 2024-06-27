@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Booking = require("../Models/Booking");
+const { default: ListingDetails } = require("../../dream_nest-main/client/src/pages/ListingDetails");
 
 router.post("/create", async (req, res) => {
     try {
@@ -25,5 +26,16 @@ router.post("/create", async (req, res) => {
         res.status(400).json({ message: "There is something wrong, unable to book now" });
     }
 });
+router.get('/get',async(req,res)=>{
+    try {
+        const Bookings=await ListingDetails.find();
+        res.status(200).json({booking:Bookings})
+        
+    } catch (error) {
+        console.log("not found ",error.message)
+        res.status(400).json({message:"error something wrong"})
+        
+    }
+})
 
 module.exports = router;
