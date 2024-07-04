@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Booking = require("../Models/Booking");
+const nodemailer= require("nodemailer");
 
 router.post("/create", async (req, res) => {
     try {
