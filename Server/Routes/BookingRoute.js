@@ -5,7 +5,7 @@ const nodemailer= require("nodemailer");
 
 router.post("/create", async (req, res) => {
     try {
-        const { customerId, hostId, listingId, startDate, endDate, totalPrice } = req.body;
+        const { customerId, hostId, listingId, startDate, endDate, totalPrice, customerEmail } = req.body;
 
         // Create a new booking instance
         const newBooking = new Booking({
@@ -14,7 +14,8 @@ router.post("/create", async (req, res) => {
             listingId,
             startDate,
             endDate,
-            totalPrice
+            totalPrice,
+            customerEmail
         });
 
         // Save the new booking to the database
