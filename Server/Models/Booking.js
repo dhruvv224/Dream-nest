@@ -1,30 +1,37 @@
 const mongoose=require("mongoose");
 const BookingSchema=new mongoose.Schema({
-    customerId:{
+    customerId:
+    {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    hostId:{
+    hostId:
+    {
         type:String,
         required:true,
     },
-    listingId: {
+    listingId:
+     {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Listing",
       },
-      startDate: {
+      startDate:
+     {
         type: String,
         required: true,
       },
-      endDate: {
+      endDate: 
+      {
         type: String,
         required: true,
       },
-      totalPrice: {
+      totalPrice:
+       {
         type: Number,
         required: true,
       },
-      customerEmail:{
+      customerEmail:
+      {
       type:String,
 
       }
