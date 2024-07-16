@@ -56,7 +56,7 @@ router.post("/create", async (req, res) => {
                 return console.log("there is an error",error)
 
             }
-            console.log('Message sent',info.messageId)
+            console.log('Message sentt',info.messageId)
             console.log('privew URL',nodemailer.getTestMessageUrl)
         })
         res.status(200).json({ message: "Your booking has been done", booking: newBooking });
